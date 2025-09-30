@@ -5,7 +5,7 @@ import openpyxl
 from scipy.stats import t
 
 # Đọc dữ liệu từ file Excel
-df = pd.read_excel(r'C:\code ptit\KHDL\data.xlsx', sheet_name='Sheet1')
+df = pd.read_excel(r'C:\code ptit\KHDL\Bai_tap_chuong_1\data.xlsx', sheet_name='Sheet1')
 # Lọc dữ liệu cho năm 2021 và giới tính
 bang_trung_binh_cac_nuoc_2021 = df[(df['Period'] == 2021) &(df['Dim1'] == 'Both sexes')&(df['IndicatorCode'] == 'WHOSIS_000001') ].copy()
 # Chuyển đổi cột 'FactValueNumeric' sang kiểu số, bỏ qua các giá trị không thể chuyển đổi
@@ -76,7 +76,7 @@ bang_trung_binh_cac_nuoc_2021_export = bang_trung_binh_cac_nuoc_2021[columns_to_
 
 # Lưu kết quả vào file Excel
 bang_trung_binh_cac_nuoc_2021_export.to_excel(
-    r'C:\code ptit\KHDL\tuoi_tho_trung_binh_cac_nuoc_2021.xlsx',
+    r'C:\code ptit\KHDL\Bai_tap_chuong_1\tuoi_tho_trung_binh_cac_nuoc_2021.xlsx',
     index=False,
     engine='openpyxl'
 )
