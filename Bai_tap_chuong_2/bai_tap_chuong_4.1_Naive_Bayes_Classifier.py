@@ -69,4 +69,4 @@ new_data = pd.DataFrame([{
 
 pred = model.predict(new_data)[0]
 pred_label = le_dict['kieu_dang'].inverse_transform([pred])[0]
-print(f"\n🚗 Dự đoán kiểu dáng xe: {pred_label}")
+print(f"\nDự đoán kiểu dáng xe: {pred_label}")
