@@ -22,7 +22,7 @@ all_links = []
 data_rows = []
 
 # 1: Thu thập links 
-for page in range(2, 106):
+for page in range(2, 150):
     url = f"https://xe.chotot.com/mua-ban-oto-ha-noi?page={page}"
     print(f"Đang tải trang {url}")
     driver.get(url)
@@ -50,6 +50,9 @@ for idx, full_link in enumerate(all_links, 1):
         time.sleep(1)
         
         soup = BeautifulSoup(driver.page_source, "html.parser")
+        # Giá xe: class="p26z2wb"
+        gia_elem = soup.find("b", class_="p26z2wb")
+        gia_xe = gia_elem.text.strip() if gia_elem else ""
         
         # Năm SX: itemprop="mfdate"
         nam_sx_elem = soup.find("span", {"itemprop": "mfdate"})
@@ -94,22 +97,22 @@ for idx, full_link in enumerate(all_links, 1):
         
         # Thêm row
         data_rows.append([
-            full_link, ngay_dang, nam_sx, xuat_xu, dia_diem,
+            full_link, gia_xe, ngay_dang, nam_sx, xuat_xu, dia_diem,
             kieu_dang, so_km, hop_so, tinh_trang, nhien_lieu
         ])
         
         # Debug 
-        print(f"      ✓ Ngày đăng: '{ngay_dang}' | Địa điểm: '{dia_diem}' | Năm SX: '{nam_sx}' | Xuất xứ: '{xuat_xu}' | Kiểu dáng: '{kieu_dang}' | Số km: '{so_km}' | Hộp số: '{hop_so}' | Tình trạng: '{tinh_trang}' | Nhiên liệu: '{nhien_lieu}'")
+        print(f"      ✓ Giá: '{gia_xe}' | Ngày đăng: '{ngay_dang}' | Địa điểm: '{dia_diem}' | Năm SX: '{nam_sx}' | Xuất xứ: '{xuat_xu}' | Kiểu dáng: '{kieu_dang}' | Số km: '{so_km}' | Hộp số: '{hop_so}' | Tình trạng: '{tinh_trang}' | Nhiên liệu: '{nhien_lieu}'")
         
     except Exception as e:
-        print(f"      ❌ Lỗi: {e}")
-        data_rows.append([full_link, "", "", "", "", "", "", "", "", ""])
+        print(f"       Lỗi: {e}")
+        data_rows.append([full_link, "", "", "", "", "", "", "", "", "", ""])
 
 driver.quit()
 
 # 2: lưu CSV 
 csv_path = os.path.join(save_dir, "du_lieu_xe_chotot_fixed.csv")
-header = ["link", "ngay_dang", "nam_sx", "xuat_xu", "dia_diem", "kieu_dang", "so_km", "hop_so", "tinh_trang", "nhien_lieu"]
+header = ["link", "gia_xe", "ngay_dang", "nam_sx", "xuat_xu", "dia_diem", "kieu_dang", "so_km", "hop_so", "tinh_trang", "nhien_lieu"]
 with open(csv_path, "w", newline="", encoding="utf-8") as f:
     writer = csv.writer(f)
     writer.writerow(header)

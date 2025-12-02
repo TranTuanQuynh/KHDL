@@ -1,6 +1,6 @@
-# ===============================================
+
 #  NAIVE BAYES CLASSIFIER - DỰ ĐOÁN KIỂU DÁNG XE
-# ===============================================
+
 
 # 1. Import thư viện
 import pandas as pd
